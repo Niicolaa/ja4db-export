@@ -1,0 +1,8 @@
+application,library,device,os,user_agent_string,certificate_authority,verified,notes,observation_count,ja4x_fingerprint
+Sliver/Havoc C2 Server,,,,,,true,,1,000000000000_4f24da86fad6_bf0f0589fc03
+Sliver/Havoc C2 Server,,,,,,true,,1,000000000000_7c32fa18c13e_bf0f0589fc03
+Cobalt Strike Cat C2,,,,,,true,,1,2166164053c1_2166164053c1_30d204a01551
+SoftEther VPN,,,,,,true,,1,d55f458d5a6c_d55f458d5a6c_0fc8c171b6ae
+Qakbot Malware,,,,,,true,,1,2bab15409345_af684594efb4_000000000000
+Pikabot Malware,,,,,,true,,1,1a59268f55e5_1a59268f55e5_795797892f9c
+,,Cisco RV32x,,,,true,,1,fba10053814e_fba10053814e_795797892f9c
