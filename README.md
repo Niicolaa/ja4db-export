@@ -45,7 +45,6 @@ externaldata (
   ja4_fingerprint:string,
   ja4_fingerprint_string:string,
   ja4h_fingerprint:string,
-  ja4h_fingerprint:string,
   ja4s_fingerprint:string,
   ja4t_fingerprint:string,
   ja4ts_fingerprint:string,
@@ -55,11 +54,9 @@ externaldata (
 [
   @"https://raw.githubusercontent.com/Niicolaa/ja4db-export/main/csv/all_records.csv"
 ]
-with (format="csv", ignoreFirstRecord=true);
-
-JA4Mapping
-| take 10
-
+with (format="csv", ignoreFirstRecord=true)
+| summarize make_set(application), make_set(library), make_set(device), make_set(os), make_set(user_agent_string), make_set(notes), make_set(observation_count) by ja4_fingerprint
+;
 EntraIdSignInEvents
 | join kind=leftouter JA4Mapping on $left.GatewayJA4 == $right.ja4_fingerprint
 ```
