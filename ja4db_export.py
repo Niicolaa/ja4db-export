@@ -81,6 +81,25 @@ def to_csv_cell(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
 
 
+def record_sort_key(r: Dict[str, Any]) -> tuple:
+    """
+    Stable global ordering for all records.
+    """
+    return (
+        r.get("application"),
+        r.get("library"),
+        r.get("os"),
+        r.get("user_agent_string"),
+        r.get("ja4_fingerprint"),
+        r.get("ja4s_fingerprint"),
+        r.get("ja4h_fingerprint"),
+        r.get("ja4x_fingerprint"),
+        r.get("ja4t_fingerprint"),
+        r.get("ja4ts_fingerprint"),
+        r.get("ja4tscan_fingerprint"),
+    )
+
+
 def write_full_csv(payload: Any, csv_dir: Path, filename: str = "all_records.csv") -> Path:
     if not isinstance(payload, list):
         raise TypeError(
@@ -89,7 +108,8 @@ def write_full_csv(payload: Any, csv_dir: Path, filename: str = "all_records.csv
         )
 
     rows: List[Dict[str, Any]] = [x for x in payload if isinstance(x, dict)]
-
+    rows.sort(key=record_sort_key)
+  
     keys: Set[str] = set()
     for r in rows:
         keys.update(r.keys())
@@ -128,21 +148,23 @@ def write_fingerprint_csvs(payload: Any, csv_dir: Path) -> None:
             w = csv.DictWriter(fh, fieldnames=fieldnames, extrasaction="ignore")
             w.writeheader()
             writers[fp_col] = w
-
-        for item in payload:
-            if not isinstance(item, dict):
-                continue
-
-            base = {c: to_csv_cell(item.get(c)) for c in BASE_COLS}
-
-            for fp_col in FINGERPRINT_COLS:
-                v = item.get(fp_col)
-                if not is_present(v):
-                    continue
-                row = dict(base)
+        
+             row = dict(base)
                 row[fp_col] = to_csv_cell(v)
-                writers[fp_col].writerow(row)
-
+                buckets[fp_col].append(row)
+        
+        # Sort each CSV deterministically
+        for fp_col, rows in buckets.items():
+            rows.sort(key=lambda r: (
+                norm(r.get(fp_col)),
+                norm(r.get("application")),
+                norm(r.get("library")),
+                norm(r.get("os")),
+                norm(r.get("user_agent_string")),
+            ))
+            for r in rows:
+                writers[fp_col].writerow(r)
+          
     finally:
         for fh in files.values():
             try:
