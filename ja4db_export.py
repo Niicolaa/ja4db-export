@@ -81,22 +81,31 @@ def to_csv_cell(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
 
 
+def norm(v: Any) -> str:
+    """Normalize values for sorting."""
+    if v is None:
+        return ""
+    if isinstance(v, (int, float)):
+        return f"{v:020}"   # numeric stable sort
+    return str(v).lower().strip()
+
+
 def record_sort_key(r: Dict[str, Any]) -> tuple:
     """
     Stable global ordering for all records.
     """
     return (
-        r.get("application"),
-        r.get("library"),
-        r.get("os"),
-        r.get("user_agent_string"),
-        r.get("ja4_fingerprint"),
-        r.get("ja4s_fingerprint"),
-        r.get("ja4h_fingerprint"),
-        r.get("ja4x_fingerprint"),
-        r.get("ja4t_fingerprint"),
-        r.get("ja4ts_fingerprint"),
-        r.get("ja4tscan_fingerprint"),
+        norm(r.get("application")),
+        norm(r.get("library")),
+        norm(r.get("os")),
+        norm(r.get("user_agent_string")),
+        norm(r.get("ja4_fingerprint")),
+        norm(r.get("ja4s_fingerprint")),
+        norm(r.get("ja4h_fingerprint")),
+        norm(r.get("ja4x_fingerprint")),
+        norm(r.get("ja4t_fingerprint")),
+        norm(r.get("ja4ts_fingerprint")),
+        norm(r.get("ja4tscan_fingerprint")),
     )
 
 
