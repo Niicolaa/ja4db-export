@@ -148,11 +148,25 @@ def write_fingerprint_csvs(payload: Any, csv_dir: Path) -> None:
             w = csv.DictWriter(fh, fieldnames=fieldnames, extrasaction="ignore")
             w.writeheader()
             writers[fp_col] = w
-        
-             row = dict(base)
+
+        # Collect rows first
+        buckets: Dict[str, List[Dict[str, Any]]] = {fp: [] for fp in FINGERPRINT_COLS}
+
+        for item in payload:
+            if not isinstance(item, dict):
+                continue
+
+            base = {c: to_csv_cell(item.get(c)) for c in BASE_COLS}
+
+            for fp_col in FINGERPRINT_COLS:
+                v = item.get(fp_col)
+                if not is_present(v):
+                    continue
+
+                row = dict(base)
                 row[fp_col] = to_csv_cell(v)
                 buckets[fp_col].append(row)
-        
+
         # Sort each CSV deterministically
         for fp_col, rows in buckets.items():
             rows.sort(key=lambda r: (
@@ -164,7 +178,7 @@ def write_fingerprint_csvs(payload: Any, csv_dir: Path) -> None:
             ))
             for r in rows:
                 writers[fp_col].writerow(r)
-          
+
     finally:
         for fh in files.values():
             try:
