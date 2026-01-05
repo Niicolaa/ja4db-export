@@ -1,7 +1,7 @@
 application,library,device,os,user_agent_string,certificate_authority,verified,notes,observation_count,ja4tscan_fingerprint
 ,,Epson Printer,,,,true,,1,28960_2-4-8-1-3_1460_3_1-4-8-16
-,,Ubiquiti Router,UniFi OS 3.2.12,,,true,,1,43440_2-4-8-1-3_1460_12_1-2-4-8-17
 ,,Ubiquiti Camera,,,,true,,1,28960_2-4-8-1-3_1460_6_1-2-4-8-16
-,,Rachio IoT,,,,true,,1,7168_2-3-0_1460_0_0-0-0-0-0-0-0-0-0-0
 ,,Phillips Hue Bridge,,,,true,,1,29200_2-1-1-4-1-3_1460_3_1-2-4-8-17
+,,Ubiquiti Router,UniFi OS 3.2.12,,,true,,1,43440_2-4-8-1-3_1460_12_1-2-4-8-17
 ,,Cisco RV32x,,,,true,,1,5792_2-4-8-1-3_1460_4_3-6-12-24
+,,Rachio IoT,,,,true,,1,7168_2-3-0_1460_0_0-0-0-0-0-0-0-0-0-0
