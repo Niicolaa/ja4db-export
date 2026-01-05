@@ -1,9 +1,9 @@
 application,library,device,os,user_agent_string,certificate_authority,verified,notes,observation_count,ja4s_fingerprint
-Sliver Agent,,,,,,true,,1,t130200_1301_a56c5b993250
-Sliver Agent,,,,,,true,,1,t130200_1301_a56c5b993250
-IcedID ,,,,,,true,,1,t120300_c030_5e2616a54c73
-Cobalt Strike v4.9.1 beacon,,,Windows 10,,,true,Cobalt Strike v4.9.1 over wininet,1,t120300_c030_52d195ce1d92
-Cobalt Strike v4.9.1 beacon,,,Windows 10,,,true,Cobalt Strike v4.9.1 over winhttp,1,t120300_c030_52d195ce1d92
 Anydesk,,,,,,false,,1,t120300_009f_cef8820c8f19
 Anydesk,,,,,,false,,1,t120300_009f_cef8820c8f19
 Anydesk,,,,,,true,,1,t120300_009f_cef8820c8f19
+Cobalt Strike v4.9.1 beacon,,,Windows 10,,,true,Cobalt Strike v4.9.1 over wininet,1,t120300_c030_52d195ce1d92
+Cobalt Strike v4.9.1 beacon,,,Windows 10,,,true,Cobalt Strike v4.9.1 over winhttp,1,t120300_c030_52d195ce1d92
+IcedID ,,,,,,true,,1,t120300_c030_5e2616a54c73
+Sliver Agent,,,,,,true,,1,t130200_1301_a56c5b993250
+Sliver Agent,,,,,,true,,1,t130200_1301_a56c5b993250
