@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import time
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
@@ -52,10 +53,50 @@ FINGERPRINT_COLS = [
 ]
 
 
-def fetch_json(url: str, timeout_s: int = 60) -> Any:
-    r = requests.get(url, timeout=timeout_s)
-    r.raise_for_status()
-    return r.json()
+USER_AGENT = (
+    "ja4db-export/1.0 (+https://github.com/Niicolaa/ja4db-export) "
+    "python-requests"
+)
+
+
+def fetch_json(url: str, timeout_s: int = 300, attempts: int = 4) -> Any:
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "application/json, */*;q=0.1",
+    }
+    last_exc: Exception | None = None
+    for i in range(1, attempts + 1):
+        try:
+            r = requests.get(url, headers=headers, timeout=timeout_s)
+        except requests.RequestException as e:
+            last_exc = e
+            print(f"[fetch_json] attempt {i}/{attempts} network error: {e}")
+        else:
+            if r.status_code >= 400:
+                snippet = r.text[:500].replace("\n", " ")
+                print(
+                    f"[fetch_json] attempt {i}/{attempts} HTTP {r.status_code} "
+                    f"for {url} body[:500]={snippet!r}"
+                )
+                last_exc = requests.HTTPError(
+                    f"{r.status_code} for {url}", response=r
+                )
+            else:
+                try:
+                    return r.json()
+                except ValueError as e:
+                    snippet = r.text[:500].replace("\n", " ")
+                    print(
+                        f"[fetch_json] attempt {i}/{attempts} JSON parse error: {e} "
+                        f"body[:500]={snippet!r}"
+                    )
+                    last_exc = e
+        if i < attempts:
+            backoff = 2 ** i
+            print(f"[fetch_json] sleeping {backoff}s before retry")
+            time.sleep(backoff)
+    assert last_exc is not None
+    raise last_exc
 
 
 def is_present(value: Any) -> bool:
