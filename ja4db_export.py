@@ -26,7 +26,7 @@ from typing import Any, Dict, List, Set
 import requests
 
 
-URL_DEFAULT = "https://ja4db.com/api/read"
+URL_DEFAULT = "https://ja4db.com/api/read/"
 
 BASE_COLS = [
     "application",
