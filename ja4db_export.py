@@ -59,7 +59,12 @@ USER_AGENT = (
 )
 
 
-def fetch_json(url: str, timeout_s: int = 300, attempts: int = 4) -> Any:
+def fetch_json(
+    url: str,
+    connect_timeout_s: int = 15,
+    read_timeout_s: int = 300,
+    attempts: int = 4,
+) -> Any:
     headers = {
         "User-Agent": USER_AGENT,
         "Accept": "application/json, */*;q=0.1",
@@ -67,7 +72,11 @@ def fetch_json(url: str, timeout_s: int = 300, attempts: int = 4) -> Any:
     last_exc: Exception | None = None
     for i in range(1, attempts + 1):
         try:
-            r = requests.get(url, headers=headers, timeout=timeout_s)
+            r = requests.get(
+                url,
+                headers=headers,
+                timeout=(connect_timeout_s, read_timeout_s),
+            )
         except requests.RequestException as e:
             last_exc = e
             print(f"[fetch_json] attempt {i}/{attempts} network error: {e}")
