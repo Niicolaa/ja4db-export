@@ -1,5 +1,20 @@
 # ja4db-export
 
+> [!IMPORTANT]
+> **Disclaimer — JA4DB is no longer open source and its public API is no longer accessible.**
+>
+> The `https://ja4db.com/api/read/` endpoint this project relies on can no longer be reached, so the
+> automated daily export has stopped producing new data. The last successful update was on
+> **15.05.2026**.
+>
+> The CSV files in `csv/` are therefore a **frozen snapshot** of the dataset as of that date. They are
+> kept here for reference and for existing integrations, but they are **not maintained, not updated,
+> and will grow increasingly stale**. Everything below describes how this repository worked while the
+> API was still publicly available.
+>
+> If you need current JA4 fingerprint data, please refer to the JA4DB maintainers for their current
+> licensing and access terms.
+
 This repository automatically downloads and republishes data from the official [**JA4DB**](https://ja4db.com) API.
 
 It stores:
@@ -18,6 +33,10 @@ It stores:
 A GitHub Actions workflow runs **daily** to update the data automatically.
 
 ## About JA4DB
+
+> **Note:** JA4DB *used to be* an open database. It is no longer open source and the public API is no
+> longer accessible — see the disclaimer at the top of this README. The description below reflects the
+> state of the project while the data was still publicly available.
 
 [JA4DB](https://ja4db.com) is an open database of **JA4, JA4S, JA4H, JA4X, JA4T, and related TLS fingerprint data** for network and security analysis.  
 The dataset enables researchers and analysts to identify, classify, and correlate network clients by their TLS, HTTP, and JA4-derived signatures.
@@ -84,6 +103,9 @@ So: keep the artifacts committed in the repo (or host them on Azure Blob Storage
 
 
 ## Local usage
+
+> **Note:** This will no longer work against the official JA4DB API — the endpoint is no longer
+> publicly accessible and the script will fail after exhausting its retries.
 
 ```bash
 python -m venv .venv

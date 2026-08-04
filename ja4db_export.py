@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 """
+DISCLAIMER: JA4DB is no longer open source and its public API is no longer
+accessible. The endpoint below cannot be reached anymore, so this script will
+fail after exhausting its retries. The CSVs in csv/ are a frozen snapshot of the
+last successful export (15.05.2026) and are no longer maintained.
+
 Fetch https://ja4db.com/api/read and write:
 - csv/all_records.csv               (full JSON->CSV; columns = union of all keys)
 - csv/<ja4*_fingerprint>.csv        (one CSV per JA4* column, excluding ja4_fingerprint_string)
