@@ -30,7 +30,9 @@ It stores:
     - `csv/ja4ts_fingerprint.csv`
     - `csv/ja4tscan_fingerprint.csv`
 
-A GitHub Actions workflow runs **daily** to update the data automatically.
+A GitHub Actions workflow used to run **daily** to update the data automatically. Its schedule is now
+**disabled** (see `.github/workflows/daily-export.yml`) because the API is gone; it can still be
+triggered manually via `workflow_dispatch` if access is ever restored.
 
 ## About JA4DB
 
