@@ -1,10 +1,14 @@
 name: Daily JA4DB export
 
+# DISABLED: JA4DB is no longer open source and its public API is no longer
+# accessible, so this export can only fail. The daily schedule is switched off;
+# the workflow can still be started manually via workflow_dispatch if access is
+# ever restored. To resume automatic exports, uncomment the schedule below.
 on:
   workflow_dispatch:
-  schedule:
-    # GitHub cron is UTC. Adjust if you want a specific Zurich time.
-    - cron: "17 2 * * *"  # 02:17 UTC daily
+  # schedule:
+  #   # GitHub cron is UTC. Adjust if you want a specific Zurich time.
+  #   - cron: "17 2 * * *"  # 02:17 UTC daily
 
 permissions:
   contents: write
